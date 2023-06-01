@@ -29,7 +29,7 @@ console.log("The correct number to guess:", number);
 const form = () => {
   return `
   <body>
-  <p>I am thinking of a number between 1 & 5. Try guessing:</p>
+  <p>I am thinking of a number between 1 & 10. Try guessing:</p>
   <p>${phrase}</p>
   <form method="POST">
   <input name="userInput"></input>
