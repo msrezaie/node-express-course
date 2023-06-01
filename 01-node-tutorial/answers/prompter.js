@@ -75,11 +75,9 @@ const correctGuess = () => {
 };
 
 const server = http.createServer((req, res) => {
-  console.log("req.method is ", req.method);
-  console.log("req.url is ", req.url);
   if (req.method === "POST") {
     getBody(req, (body) => {
-      console.log("The body of the post is ", body);
+      console.log("User input: ", body);
       // here, you can add your own logic
       if (body["userInput"] == number) {
         phrase = `Nice! Correct number was: ${number}`;
