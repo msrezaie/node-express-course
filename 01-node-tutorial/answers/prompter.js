@@ -42,7 +42,7 @@ const form = () => {
 const correctGuess = () => {
   return `
   <body>
-    <p>I am thinking of a number between 1 & 5. Try guessing:</p>
+    <p>I am thinking of a number between 1 & 10. Try guessing:</p>
     <p id="myParagraph">${phrase}</p>
     <form method="POST">
     <input name="userInput"></input>
