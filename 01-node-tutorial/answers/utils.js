@@ -1,6 +1,5 @@
-const value = "util";
-const utilFunction = (value) => {
-  return `From ${value}.js`;
+const utilFunction = () => {
+  return "From util.js";
 };
 
-module.exports = utilFunction(value);
+module.exports = utilFunction;

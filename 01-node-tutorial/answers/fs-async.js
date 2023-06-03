@@ -10,30 +10,40 @@ const line3 =
 console.log("at start");
 
 writeFile("./temporary/fileB.txt", `${line1} \n`, (err, result) => {
-  console.log("at point 1");
+  console.log("writing line 1");
   if (err) {
     console.log("This error happened: ", err);
     return;
-  } else {
-    writeFile(
-      "./temporary/fileB.txt",
-      `${line2} \n${line3}`,
-      { flag: "a" },
-      (err, result) => {
-        if (err) {
-          console.log(err);
-          return;
-        }
-        console.log("done with writing");
+  }
+  writeFile(
+    "./temporary/fileB.txt",
+    `${line2} \n`,
+    { flag: "a" },
+    (err, result) => {
+      console.log("writing line 2");
+      if (err) {
+        console.log("This error happened: ", err);
+        return;
       }
-    );
-  }
-});
-
-readFile("./temporary/fileB.txt", "utf8", (err, result) => {
-  if (err) {
-    console.log("This error happened: ", err);
-    return;
-  }
-  console.log(result);
+      writeFile(
+        "./temporary/fileB.txt",
+        `${line3} \n`,
+        { flag: "a" },
+        (err, result) => {
+          console.log("writing line 3");
+          if (err) {
+            console.log("This error happened: ", err);
+            return;
+          }
+          readFile("./temporary/fileB.txt", "utf8", (err, result) => {
+            if (err) {
+              console.log("This error happened: ", err);
+              return;
+            }
+            console.log(result);
+          });
+        }
+      );
+    }
+  );
 });

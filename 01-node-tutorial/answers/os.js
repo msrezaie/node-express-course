@@ -7,4 +7,4 @@ const osInfo = {
   version: os.version(),
 };
 
-module.exports = osInfo;
+console.log(osInfo);

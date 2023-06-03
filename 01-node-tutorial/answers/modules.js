@@ -4,11 +4,8 @@ const singleValue = require("./utils");
 
 require("./mind-grenade");
 
-const osInfo = require("./os");
-
-const filePath = require("./path");
+const alternateFlavor = require("./alternative-flavor");
 
 console.log(names);
-console.log(singleValue);
-console.log(osInfo);
-console.log(filePath);
+console.log(singleValue());
+console.log(alternateFlavor);
