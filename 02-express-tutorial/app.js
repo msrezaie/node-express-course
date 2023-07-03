@@ -1,56 +1,27 @@
 const express = require("express");
-const { products } = require("./data");
+const cookieParser = require("cookie-parser");
+
+const productRouter = require("./routes/product");
+const peopleRouter = require("./routes/people");
+const authenticationRouter = require("./routes/authentication");
 
 const app = express();
 
+// Middleware to parse JSON
+app.use(express.json());
+
+// Middleware to apply cookie-parser
+app.use(cookieParser());
+
+// Middleware to server static files
 app.use(express.static("./public"));
 
-app.get("/api/v1/test", (req, res) => {
-  res.json({ message: "It worked!" });
-});
+// Applying all my imported 'routers' to my main server with the help of express 'use' method
+app.use(peopleRouter);
+app.use(productRouter);
+app.use(authenticationRouter);
 
-app.get("/api/v1/products", (req, res) => {
-  res.json(products);
-});
-
-app.get("/api/v1/products/:productID", (req, res) => {
-  const prodID = parseInt(req.params.productID);
-  const result = products.find((product) => product.id === prodID);
-  result
-    ? res.json(result)
-    : res.status(404).json({ message: "That product was not found." });
-});
-
-app.get("/api/v1/query", (req, res) => {
-  let { search, limit, price } = req.query;
-  let result = [...products];
-  // example: /api/v1/query?search=al
-  if (search) {
-    // example: /api/v1/query?search=/sec/
-    if (search.startsWith("/")) {
-      // the returned query string is in string format, it is converted to a regex object and trailing slashes are removed
-      search = new RegExp(search.slice(1, -1));
-      result = result.filter((product) => search.test(product.name));
-    } else {
-      result = result.filter((product) => product.name.startsWith(search));
-    }
-  }
-  // example: /api/v1/query?price=gt:10
-  if (price) {
-    price = price.split(":");
-    if (price[0] === "gt") {
-      result = result.filter((product) => product.price > price[1]);
-    } else if (price[0] === "lt") {
-      result = result.filter((product) => product.price < price[1]);
-    }
-  }
-  // example: /api/v1/query?limit=3
-  if (limit) {
-    result = result.slice(0, Number(limit));
-  }
-  res.json(result);
-});
-
+// Middleware to handle all 404 routes
 app.all("*", (req, res) => {
   res.status(404).send("404");
 });
